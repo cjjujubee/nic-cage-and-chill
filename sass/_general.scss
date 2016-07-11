@@ -1,5 +1,3 @@
-@import "normalize";
-
 /* universal */
 body {
   margin: 0 auto;
@@ -16,9 +14,14 @@ nav {
   ul {
     margin: 0;
     padding: 0;
+    float: right;
     li {
       display: inline-block;
       list-style-type: none;
+      color: #ffffff;
+      line-height: 2em;
+      padding: 0.5em 0.5em;
+      text-decoration: none;
     }
   }
 }

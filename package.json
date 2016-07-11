@@ -2,7 +2,7 @@
   "name": "nic-cage-and-chill",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./js/index.jsx",
   "scripts": {
     "build": "npm run clean && npm run mkdir && npm run build:html && npm run build:jsx",
     "watch": "npm run watch:html & npm run watch:css & npm run watch:jsx",
