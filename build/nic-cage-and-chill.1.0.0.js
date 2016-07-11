@@ -21187,6 +21187,10 @@
 	
 	var React = __webpack_require__(1);
 	
+	//provides movie details for user with option
+	//to navigate to Netflix with correct movie ID
+	//provided by the API
+	
 	var MovieGenerator = React.createClass({
 	  displayName: "MovieGenerator",
 	
@@ -21232,6 +21236,11 @@
 	            "Poster: "
 	          )
 	        )
+	      ),
+	      React.createElement(
+	        "form",
+	        { action: "http://netflix.com" },
+	        React.createElement("input", { type: "submit", value: "Watch it now!" })
 	      )
 	    );
 	  }

@@ -1,5 +1,9 @@
 var React = require('react');
 
+//provides movie details for user with option
+//to navigate to Netflix with correct movie ID
+//provided by the API
+
 var MovieGenerator = React.createClass({
   render: function() {
     return (
@@ -15,6 +19,9 @@ var MovieGenerator = React.createClass({
             <li>Poster: </li>
           </ul>
         </div>
+        <form action="http://netflix.com">
+          <input type="submit" value="Watch it now!"/>
+        </form>
       </section>
     );
   }
