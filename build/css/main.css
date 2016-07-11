@@ -388,4 +388,9 @@ nav {
       padding: 0.5em 0.5em;
       text-decoration: none; }
 
+/* introduction */
+.intro {
+  margin-left: 5em;
+  margin-right: 5em; }
+
 /*# sourceMappingURL=main.css.map */

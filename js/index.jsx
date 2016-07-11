@@ -1,6 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var FrontPage = require('./frontPage');
+
 var NicCage = React.createClass({
   render: function() {
     return (
@@ -13,7 +15,9 @@ var NicCage = React.createClass({
           </ul>
         </nav>
         <h1>Nic Cage and Chill</h1>
-        <p>Your number one source of available Nicolas Cage movies!</p>
+        <div>
+          <FrontPage />
+        </div>
       </div>
     );
   }

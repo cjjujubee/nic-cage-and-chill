@@ -49,6 +49,8 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(33);
 	
+	var FrontPage = __webpack_require__(172);
+	
 	var NicCage = React.createClass({
 	  displayName: 'NicCage',
 	
@@ -85,9 +87,9 @@
 	        'Nic Cage and Chill'
 	      ),
 	      React.createElement(
-	        'p',
+	        'div',
 	        null,
-	        'Your number one source of available Nicolas Cage movies!'
+	        React.createElement(FrontPage, null)
 	      )
 	    );
 	  }
@@ -21128,6 +21130,51 @@
 	var ReactMount = __webpack_require__(164);
 	
 	module.exports = ReactMount.renderSubtreeIntoContainer;
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var FrontPage = React.createClass({
+	  displayName: "FrontPage",
+	
+	  render: function render() {
+	    return React.createElement(
+	      "section",
+	      { className: "intro" },
+	      React.createElement(
+	        "p",
+	        null,
+	        "Not sure what movie to watch? Love Nicolas Cage? Let us figure out your Nic Cage and Chill"
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "start-nic-caging" },
+	        React.createElement(StartButton, { text: "Let's get started!" })
+	      )
+	    );
+	  }
+	});
+	
+	var StartButton = React.createClass({
+	  displayName: "StartButton",
+	
+	  render: function render() {
+	    return React.createElement(
+	      "button",
+	      { type: "submit" },
+	      " ",
+	      this.props.text,
+	      " "
+	    );
+	  }
+	});
+	
+	module.exports = FrontPage;
 
 /***/ }
 /******/ ]);
