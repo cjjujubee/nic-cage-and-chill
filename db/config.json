@@ -1,0 +1,11 @@
+{
+    "production": {
+        "url": "mongodb://localhost/nic-cage-and-chill"
+    },
+    "test": {
+        "url": "mongodb://localhost/nic-cage-and-chill-test"
+    },
+    "development": {
+        "url": "mongodb://localhost/nic-cage-and-chill-dev"
+    }
+}
