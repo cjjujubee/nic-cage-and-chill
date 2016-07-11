@@ -13,6 +13,8 @@ var FrontPage = React.createClass({
   }
 });
 
+//takes user to either login or signup page
+
 var StartButton = React.createClass({
   render: function() {
     return (

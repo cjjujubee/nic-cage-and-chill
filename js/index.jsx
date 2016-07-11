@@ -2,6 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var FrontPage = require('./frontPage');
+var MovieGenerator = require('./movieGenerator');
 
 var NicCage = React.createClass({
   render: function() {
@@ -25,6 +26,6 @@ var NicCage = React.createClass({
 
 document.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
-    <NicCage />, document.getElementById('app')
+    <MovieGenerator />, document.getElementById('app')
   );
 });

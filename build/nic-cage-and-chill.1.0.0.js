@@ -50,6 +50,7 @@
 	var ReactDOM = __webpack_require__(33);
 	
 	var FrontPage = __webpack_require__(172);
+	var MovieGenerator = __webpack_require__(173);
 	
 	var NicCage = React.createClass({
 	  displayName: 'NicCage',
@@ -96,7 +97,7 @@
 	});
 	
 	document.addEventListener('DOMContentLoaded', function () {
-	  ReactDOM.render(React.createElement(NicCage, null), document.getElementById('app'));
+	  ReactDOM.render(React.createElement(MovieGenerator, null), document.getElementById('app'));
 	});
 
 /***/ },
@@ -21160,6 +21161,8 @@
 	  }
 	});
 	
+	//takes user to either login or signup page
+	
 	var StartButton = React.createClass({
 	  displayName: "StartButton",
 	
@@ -21175,6 +21178,66 @@
 	});
 	
 	module.exports = FrontPage;
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var MovieGenerator = React.createClass({
+	  displayName: "MovieGenerator",
+	
+	  render: function render() {
+	    return React.createElement(
+	      "section",
+	      { className: "movie" },
+	      React.createElement(
+	        "h3",
+	        null,
+	        "\"What's that like? What's it taste like? Describe it like Hemingway.\""
+	      ),
+	      React.createElement("img", { src: "", alt: "Nic Cage Gif" }),
+	      React.createElement(
+	        "div",
+	        { className: "movieDetails" },
+	        React.createElement(
+	          "ul",
+	          null,
+	          React.createElement(
+	            "li",
+	            null,
+	            "Title: "
+	          ),
+	          React.createElement(
+	            "li",
+	            null,
+	            "Year Released: "
+	          ),
+	          React.createElement(
+	            "li",
+	            null,
+	            "Rating: "
+	          ),
+	          React.createElement(
+	            "li",
+	            null,
+	            "Summary: "
+	          ),
+	          React.createElement(
+	            "li",
+	            null,
+	            "Poster: "
+	          )
+	        )
+	      )
+	    );
+	  }
+	});
+	
+	module.exports = MovieGenerator;
 
 /***/ }
 /******/ ]);
