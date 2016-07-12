@@ -2,6 +2,7 @@ require('./db/connect');
 var express = require('express');
 var bodyParser = require('body-parser');
 var userMovieRoutes = require('./routes/userMovie');
+var userRoutes = require('./routes/user');
 var app = express();
 var passport = require('passport');
 
@@ -18,6 +19,7 @@ app.use(function(req, res, next) {
 app.use(express.static('public'));
 
 app.use('/', userMovieRoutes);
+app.use('/', userRoutes);
 
 app.listen(8080, function() {
     console.log('Running on port 8080');
