@@ -11,7 +11,7 @@ var getMovie = function() {
   var searchResult = options.base_url + options.actor;
 
   return function(dispatch) {
-    return fetch(url).then(function(result) {
+    return fetch(searchResult).then(function(result) {
       if (result.status < 200 || result.status >= 300) {
         var err = new Error(result.statusText);
         err.response = result;
@@ -20,11 +20,10 @@ var getMovie = function() {
       return result;
     })
     .then(function(data) {
-      console.log('movie data', data);
       return data.json();
     })
     .then(function(data) {
-      return dispatch(getMovieSuccess(data.response));
+      return dispatch(getMovieSuccess(data));
     })
     .catch(function(err) {
       return dispatch(getMovieError(err));
@@ -34,6 +33,7 @@ var getMovie = function() {
 
 var GET_MOVIE_SUCCESS = 'GET_MOVIE_SUCCESS';
 var getMovieSuccess = function(data) {
+  // console.log('**********MOVIE SUCCESS BITCHES**********', data);
   return {
     type: GET_MOVIE_SUCCESS,
     data: data
@@ -42,6 +42,7 @@ var getMovieSuccess = function(data) {
 
 var GET_MOVIE_ERROR = 'GET_MOVIE_ERROR';
 var getMovieError = function(err) {
+  console.log('MOVIE FAILURE', err)
   return {
     type: GET_MOVIE_ERROR,
     err: err
