@@ -28997,17 +28997,17 @@
 	var MovieGenerator = React.createClass({
 	  displayName: 'MovieGenerator',
 	
-	  // saveMovie: function(event) {
-	  //   event.preventDefault();
-	  //
-	  //   var movie = {
-	  //     show_title: this.props.nicCage[0].show_title,
-	  //     release_year: this.props.nicCage[0].release_year,
-	  //     poster: this.props.nicCage[0].poster
-	  //   };
-	  //
-	  //   this.props.dispatch(userActions.saveMovie(movie));
-	  // },
+	  saveMovie: function saveMovie(event) {
+	    event.preventDefault();
+	
+	    var movie = {
+	      show_title: this.props.nicCage[0].show_title,
+	      release_year: this.props.nicCage[0].release_year,
+	      poster: this.props.nicCage[0].poster
+	    };
+	
+	    this.props.dispatch(userActions.saveMovie(movie));
+	  },
 	  render: function render() {
 	    var cageGif = "../assets/images/" + this.props.nicCage[0].gif;
 	    console.log('getting nic gif', cageGif);
