@@ -27,7 +27,6 @@ exports.movieReducer = function(state, action) {
     var gifArray = ['cage_001', 'cage_002', 'cage_003', 'cage_004', 'cage_005', 'cage_006', 'cage_007', 'cage_008', 'cage_009', 'cage_010'];
     var randomGifNumber = Math.floor((Math.random() * gifArray.length) + 1);
     var randomGif = gifArray[randomGifNumber] + '.gif';
-    console.log('AN IMAGE IMAGE IMAGE IMAGE IMAGE', randomGif);
 
     var newState = update(state, {0: {
       $set: {

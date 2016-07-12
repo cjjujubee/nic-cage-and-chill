@@ -1,8 +1,13 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+//components
+
 var FrontPage = require('./frontPage');
 var MovieGenerator = require('./movieGenerator');
+
+//actions
+var movieActions = require('../redux/actions/movie');
 
 var NicCage = React.createClass({
   render: function() {
