@@ -28220,6 +28220,7 @@
 	
 	var initialState = [{
 	  gif: null,
+	  show_id: null,
 	  show_title: null,
 	  release_year: null,
 	  rating: null,
@@ -28228,7 +28229,6 @@
 	}];
 	
 	exports.movieReducer = function (state, action) {
-	  console.log('state: ', state);
 	  state = state || initialState;
 	  if (action.type === actions.GET_MOVIE_SUCCESS) {
 	    var movie = action.data;
@@ -28249,8 +28249,8 @@
 	        $set: {
 	          gif: randomGif,
 	          show_id: randomMovie.show_id,
-	          title: randomMovie.show_title,
-	          release: randomMovie.release_year,
+	          show_title: randomMovie.show_title,
+	          release_year: randomMovie.release_year,
 	          rating: randomMovie.rating,
 	          summary: randomMovie.summary,
 	          poster: randomMovie.poster
@@ -28302,7 +28302,6 @@
 	
 	var GET_MOVIE_SUCCESS = 'GET_MOVIE_SUCCESS';
 	var getMovieSuccess = function getMovieSuccess(data) {
-	  // console.log('**********MOVIE SUCCESS BITCHES**********', data);
 	  return {
 	    type: GET_MOVIE_SUCCESS,
 	    data: data
@@ -28992,11 +28991,13 @@
 	  displayName: 'MovieGenerator',
 	
 	  render: function render() {
+	    var cageGif = "../assets/" + this.props.nicCage[0].gif;
+	    console.log('getting nic', cageGif);
 	    return React.createElement(
 	      'section',
 	      { className: 'movie' },
 	      React.createElement(
-	        'h3',
+	        'h2',
 	        null,
 	        '"What\'s that like? What\'s it taste like? Describe it like Hemingway."'
 	      ),
@@ -29010,27 +29011,32 @@
 	          React.createElement(
 	            'li',
 	            null,
-	            'Title: '
+	            'Title: ',
+	            this.props.nicCage[0].show_title
 	          ),
 	          React.createElement(
 	            'li',
 	            null,
-	            'Year Released: '
+	            'Released: ',
+	            this.props.nicCage[0].released_year
 	          ),
 	          React.createElement(
 	            'li',
 	            null,
-	            'Rating: '
+	            'Rating: ',
+	            this.props.nicCage[0].rating
 	          ),
 	          React.createElement(
 	            'li',
 	            null,
-	            'Summary: '
+	            'Summary: ',
+	            this.props.nicCage[0].summary
 	          ),
 	          React.createElement(
 	            'li',
 	            null,
-	            'Poster: '
+	            React.createElement('img', { src: this.props.nicCage[0].poster, alt: 'movie poster' }),
+	            ' '
 	          )
 	        )
 	      ),
@@ -29043,7 +29049,15 @@
 	  }
 	});
 	
-	module.exports = MovieGenerator;
+	var mapStateToProps = function mapStateToProps(state, props) {
+	  return {
+	    nicCage: state
+	  };
+	};
+	
+	var Container = connect(mapStateToProps)(MovieGenerator);
+	
+	module.exports = Container;
 
 /***/ },
 /* 264 */
@@ -29062,9 +29076,21 @@
 	
 	var store = __webpack_require__(254);
 	
+	var movieActions = __webpack_require__(257);
+	
 	var MovieChecklist = React.createClass({
 	  displayName: 'MovieChecklist',
 	
+	  getMovie: function getMovie(event) {
+	    event.preventDefault();
+	
+	    console.log('getting a movie nowwwwwww');
+	    //makes API call to Netflix Roulette and
+	    //takes user to page with movie details
+	
+	    this.props.dispatch(movieActions.getMovie());
+	    hashHistory.push("/yourmovie");
+	  },
 	  render: function render() {
 	    return React.createElement(
 	      'section',
@@ -29094,8 +29120,8 @@
 	        )
 	      ),
 	      React.createElement(
-	        'div',
-	        { className: 'movieTime' },
+	        'form',
+	        { onSubmit: this.getMovie, className: 'movieTime' },
 	        React.createElement(
 	          'h4',
 	          null,
@@ -29129,7 +29155,7 @@
 	
 	var mapStateToProps = function mapStateToProps(state, props) {
 	  return {
-	    NicCage: state
+	    nicCage: state
 	  };
 	};
 	

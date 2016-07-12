@@ -9,7 +9,19 @@ var hashHistory = router.hashHistory;
 
 var store = require('../redux/store.js');
 
+var movieActions = require('../redux/actions/movie');
+
 var MovieChecklist = React.createClass({
+  getMovie: function(event) {
+    event.preventDefault();
+
+    console.log('getting a movie nowwwwwww');
+    //makes API call to Netflix Roulette and
+    //takes user to page with movie details
+
+    this.props.dispatch(movieActions.getMovie());
+    hashHistory.push("/yourmovie");
+  },
   render: function() {
     return (
       <section className="movie">
@@ -25,11 +37,11 @@ var MovieChecklist = React.createClass({
             <li></li>
           </ul>
         </div>
-        <div className="movieTime">
+        <form onSubmit={this.getMovie} className="movieTime">
           <h4>Ready for more Nic Cage?</h4>
           <p>Click below for your next Nic Cage movie!</p>
           <MovieButton text="Cage me!"/>
-        </div>
+        </form>
       </section>
     );
   }
@@ -46,7 +58,7 @@ var MovieButton = React.createClass({
 
 var mapStateToProps = function(state, props) {
   return {
-    NicCage: state
+    nicCage: state
   };
 };
 

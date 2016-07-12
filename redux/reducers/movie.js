@@ -3,6 +3,7 @@ var update = require('react-addons-update');
 
 var initialState = [{
   gif: null,
+  show_id: null,
   show_title: null,
   release_year: null,
   rating: null,
@@ -11,7 +12,6 @@ var initialState = [{
 }];
 
 exports.movieReducer = function(state, action) {
-  console.log('state: ', state);
   state = state || initialState;
   if (action.type === actions.GET_MOVIE_SUCCESS) {
     var movie = action.data;
@@ -32,8 +32,8 @@ exports.movieReducer = function(state, action) {
       $set: {
         gif: randomGif,
         show_id: randomMovie.show_id,
-        title: randomMovie.show_title,
-        release: randomMovie.release_year,
+        show_title: randomMovie.show_title,
+        release_year: randomMovie.release_year,
         rating: randomMovie.rating,
         summary: randomMovie.summary,
         poster: randomMovie.poster

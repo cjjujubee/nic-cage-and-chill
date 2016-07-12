@@ -33,7 +33,6 @@ var getMovie = function() {
 
 var GET_MOVIE_SUCCESS = 'GET_MOVIE_SUCCESS';
 var getMovieSuccess = function(data) {
-  // console.log('**********MOVIE SUCCESS BITCHES**********', data);
   return {
     type: GET_MOVIE_SUCCESS,
     data: data
