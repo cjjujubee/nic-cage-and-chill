@@ -28991,8 +28991,11 @@
 	  displayName: 'MovieGenerator',
 	
 	  render: function render() {
-	    var cageGif = "../assets/" + this.props.nicCage[0].gif;
-	    console.log('getting nic', cageGif);
+	    var cageGif = "../assets/images/" + this.props.nicCage[0].gif;
+	    console.log('getting nic gif', cageGif);
+	
+	    var showId = this.props.nicCage[0].show_id;
+	    console.log('show ID', showId);
 	    return React.createElement(
 	      'section',
 	      { className: 'movie' },
@@ -29001,7 +29004,7 @@
 	        null,
 	        '"What\'s that like? What\'s it taste like? Describe it like Hemingway."'
 	      ),
-	      React.createElement('img', { src: '', alt: 'Nic Cage Gif' }),
+	      React.createElement('img', { src: cageGif, alt: 'Nic Cage Gif' }),
 	      React.createElement(
 	        'div',
 	        { className: 'movieDetails' },
@@ -29018,7 +29021,7 @@
 	            'li',
 	            null,
 	            'Released: ',
-	            this.props.nicCage[0].released_year
+	            this.props.nicCage[0].release_year
 	          ),
 	          React.createElement(
 	            'li',
@@ -29042,7 +29045,7 @@
 	      ),
 	      React.createElement(
 	        'form',
-	        { action: 'http://netflix.com' },
+	        { action: 'http://netflix.com/title/{showId}' },
 	        React.createElement('input', { type: 'submit', value: 'Watch it now!' })
 	      )
 	    );

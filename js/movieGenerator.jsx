@@ -18,22 +18,25 @@ var store = require('../redux/store.js');
 
 var MovieGenerator = React.createClass({
   render: function() {
-    var cageGif = "../assets/" + this.props.nicCage[0].gif;
-    console.log('getting nic', cageGif);
+    var cageGif = "../assets/images/" +this.props.nicCage[0].gif;
+    console.log('getting nic gif', cageGif);
+
+    var showId = this.props.nicCage[0].show_id;
+    console.log('show ID', showId);
     return (
       <section className="movie">
         <h2>"What's that like? What's it taste like? Describe it like Hemingway."</h2>
-        <img src="" alt="Nic Cage Gif"/>
+        <img src={cageGif} alt="Nic Cage Gif"/>
         <div className="movieDetails">
           <ul>
             <li>Title: {this.props.nicCage[0].show_title}</li>
-            <li>Released: {this.props.nicCage[0].released_year}</li>
+            <li>Released: {this.props.nicCage[0].release_year}</li>
             <li>Rating: {this.props.nicCage[0].rating}</li>
             <li>Summary: {this.props.nicCage[0].summary}</li>
             <li><img src={this.props.nicCage[0].poster} alt="movie poster"/> </li>
           </ul>
         </div>
-        <form action="http://netflix.com">
+        <form action="http://netflix.com/title/{showId}">
           <input type="submit" value="Watch it now!"/>
         </form>
       </section>
