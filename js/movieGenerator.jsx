@@ -9,6 +9,8 @@ var hashHistory = router.hashHistory;
 
 var store = require('../redux/store.js');
 
+var userActions = require('../redux/actions/user');
+
 //provides movie details for user with option
 //to navigate to Netflix with correct movie ID
 //provided by the API
@@ -16,13 +18,25 @@ var store = require('../redux/store.js');
 //TODO: once user clicks on 'Watch it now', save movie to
 //user's account as movie they have watched
 
+//TODO: allow user to go back with back button
+
 var MovieGenerator = React.createClass({
+  // saveMovie: function(event) {
+  //   event.preventDefault();
+  //
+  //   var movie = {
+  //     show_title: this.props.nicCage[0].show_title,
+  //     release_year: this.props.nicCage[0].release_year,
+  //     poster: this.props.nicCage[0].poster
+  //   };
+  //
+  //   this.props.dispatch(userActions.saveMovie(movie));
+  // },
   render: function() {
-    var cageGif = "../assets/images/" +this.props.nicCage[0].gif;
+    var cageGif = "../assets/images/" + this.props.nicCage[0].gif;
     console.log('getting nic gif', cageGif);
 
-    var showId = this.props.nicCage[0].show_id;
-    console.log('show ID', showId);
+    // console.log('show ID', showId);
     return (
       <section className="movie">
         <h2>"What's that like? What's it taste like? Describe it like Hemingway."</h2>
@@ -36,7 +50,7 @@ var MovieGenerator = React.createClass({
             <li><img src={this.props.nicCage[0].poster} alt="movie poster"/> </li>
           </ul>
         </div>
-        <form action="http://netflix.com/title/{showId}">
+        <form onSubmit={this.saveMovie} action="http://netflix.com/title/{showId}">
           <input type="submit" value="Watch it now!"/>
         </form>
       </section>
