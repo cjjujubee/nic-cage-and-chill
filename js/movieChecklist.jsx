@@ -35,7 +35,7 @@ var MovieChecklist = React.createClass({
   }
 });
 
-//TODO: Takes you to MovieGenerator
+//TODO: Takes you to MovieGenerator with random movie
 var MovieButton = React.createClass({
   render: function() {
     return (
@@ -44,4 +44,12 @@ var MovieButton = React.createClass({
   }
 });
 
-module.exports = MovieChecklist;
+var mapStateToProps = function(state, props) {
+  return {
+    NicCage: state
+  };
+};
+
+var Container = connect(mapStateToProps)(MovieChecklist);
+
+module.exports = Container;

@@ -32,5 +32,12 @@ var StartButton = React.createClass({
   }
 });
 
+var mapStateToProps = function(state, props) {
+  return {
+    nicCage: state
+  };
+};
+
+var Container = connect(mapStateToProps)(FrontPage);
 
 module.exports = Container;
