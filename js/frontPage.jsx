@@ -1,4 +1,13 @@
 var React = require('react');
+var connect = require('react-redux').connect;
+
+var router = require('react-router');
+var Link = require('react-router').Link;
+var Router = router.Router;
+var Route = router.Route;
+var hashHistory = router.hashHistory;
+
+var store = require('../redux/store.js');
 
 var FrontPage = React.createClass({
   render: function() {
@@ -13,7 +22,7 @@ var FrontPage = React.createClass({
   }
 });
 
-//takes user to either login or signup page
+//TODO: takes user to either login/signup page
 
 var StartButton = React.createClass({
   render: function() {
@@ -23,4 +32,5 @@ var StartButton = React.createClass({
   }
 });
 
-module.exports = FrontPage;
+
+module.exports = Container;

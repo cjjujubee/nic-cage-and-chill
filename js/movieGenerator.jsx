@@ -1,8 +1,20 @@
 var React = require('react');
+var connect = require('react-redux').connect;
+
+var router = require('react-router');
+var Link = require('react-router').Link;
+var Router = router.Router;
+var Route = router.Route;
+var hashHistory = router.hashHistory;
+
+var store = require('../redux/store.js');
 
 //provides movie details for user with option
 //to navigate to Netflix with correct movie ID
 //provided by the API
+
+//TODO: once user clicks on 'Watch it now', save movie to
+//user's account as movie they have watched
 
 var MovieGenerator = React.createClass({
   render: function() {
