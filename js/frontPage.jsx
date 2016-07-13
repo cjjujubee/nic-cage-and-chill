@@ -23,6 +23,8 @@ var FrontPage = React.createClass({
 });
 
 //TODO: takes user to either login/signup page
+//need to create login/signup component that redirects
+//to movieChecklist component
 
 var StartButton = React.createClass({
   render: function() {

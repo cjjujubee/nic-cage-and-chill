@@ -62,9 +62,9 @@
 	
 	//components
 	
-	var FrontPage = __webpack_require__(262);
-	var MovieGenerator = __webpack_require__(263);
-	var MovieChecklist = __webpack_require__(264);
+	var FrontPage = __webpack_require__(264);
+	var MovieGenerator = __webpack_require__(265);
+	var MovieChecklist = __webpack_require__(266);
 	
 	//actions
 	var movieActions = __webpack_require__(257);
@@ -28176,13 +28176,10 @@
 	var applyMiddleware = redux.applyMiddleware;
 	var thunk = __webpack_require__(255).default;
 	
-	var movie = __webpack_require__(256);
-	var user = __webpack_require__(266);
+	var combined = __webpack_require__(267);
 	
-	var store = createStore(movie.movieReducer, applyMiddleware(thunk));
+	var store = createStore(combined.reducers, applyMiddleware(thunk));
 	module.exports = store;
-	
-	//FIX COMBINE REDUCERS
 
 /***/ },
 /* 255 */
@@ -28908,6 +28905,118 @@
 
 	'use strict';
 	
+	var actions = __webpack_require__(263);
+	var update = __webpack_require__(260);
+	
+	var initialState = {
+	  confirmed: false,
+	  show_title: null,
+	  release_year: null,
+	  poster: null
+	};
+	
+	exports.userReducer = function (state, action) {
+	  state = state || initialState;
+	  if (action.type === actions.MOVIE_SAVED) {
+	    var newState = update(state, {
+	      $set: {
+	        confirmed: true
+	      }
+	    });
+	    state = newState;
+	  } else if (action.type === actions.MOVIE_NOT_SAVED) {
+	    console.log('==========MOVIE_NOT_SAVED==========');
+	    var newState = update(state, {
+	      $set: {
+	        confirmed: false
+	      }
+	    });
+	    state = newState;
+	  } else if (action.type === actions.STORE_MOVIE) {
+	    console.log('STORING MOVIE');
+	    var newState = update(state, {
+	      $set: {
+	        show_title: action.movie.show_title,
+	        release_year: action.movie.release_year,
+	        poster: action.movie.poster
+	      }
+	    });
+	    state = newState;
+	  }
+	  return state;
+	};
+
+/***/ },
+/* 263 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var fetch = __webpack_require__(258);
+	
+	var SAVE_MOVIE = 'SAVE_MOVIE';
+	
+	var saveMovie = function saveMovie(movie, userId) {
+	  return function (dispatch) {
+	    return fetch('http://localhost:8080/users/' + userId, {
+	      method: 'PUT',
+	      headers: {
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json'
+	      },
+	      body: JSON.stringify(movie)
+	    }).then(function (response) {
+	      if (response.status < 200 || response.status >= 300) {
+	        var err = new Error(response.statusText);
+	        err.response = response;
+	        throw err;
+	      }
+	      return response;
+	    }).then(function (data) {
+	      return dispatch(movieSaved());
+	    }).catch(function (err) {
+	      return dispatch(movieNotSaved());
+	    });
+	  };
+	};
+	
+	var MOVIE_SAVED = 'MOVIE_SAVED';
+	var movieSaved = function movieSaved() {
+	  return {
+	    type: MOVIE_SAVED
+	  };
+	};
+	
+	var MOVIE_NOT_SAVED = 'MOVIE_NOT_SAVED';
+	var movieNotSaved = function movieNotSaved() {
+	  return {
+	    type: MOVIE_NOT_SAVED
+	  };
+	};
+	
+	var STORE_MOVIE = 'STORE_MOVIE';
+	var storeMovie = function storeMovie(movie) {
+	  return {
+	    type: STORE_MOVIE,
+	    movie: movie
+	  };
+	};
+	
+	exports.SAVE_MOVIE = SAVE_MOVIE;
+	exports.saveMovie = saveMovie;
+	exports.MOVIE_SAVED = MOVIE_SAVED;
+	exports.movieSaved = movieSaved;
+	exports.MOVIE_NOT_SAVED = MOVIE_NOT_SAVED;
+	exports.movieNotSaved = movieNotSaved;
+	exports.STORE_MOVIE = STORE_MOVIE;
+	exports.storeMovie = storeMovie;
+
+/***/ },
+/* 264 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
 	var React = __webpack_require__(1);
 	var connect = __webpack_require__(172).connect;
 	
@@ -28941,6 +29050,8 @@
 	});
 	
 	//TODO: takes user to either login/signup page
+	//need to create login/signup component that redirects
+	//to movieChecklist component
 	
 	var StartButton = React.createClass({
 	  displayName: 'StartButton',
@@ -28967,7 +29078,7 @@
 	module.exports = Container;
 
 /***/ },
-/* 263 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28983,14 +29094,15 @@
 	
 	var store = __webpack_require__(254);
 	
-	var userActions = __webpack_require__(265);
+	var userActions = __webpack_require__(263);
 	
 	//provides movie details for user with option
 	//to navigate to Netflix with correct movie ID
 	//provided by the API
 	
-	//TODO: once user clicks on 'Watch it now', save movie to
-	//user's account as movie they have watched
+	//TODO: NEED TO FIGURE OUT HOW TO RETRIEVE USER ID TO SEND
+	//TO BACKEND IN ORDER TO SAVE MOVIE VIA SAVEMOVIE ACTION
+	//(USER.JS IN REDUX/ACTIONS FOLDER)
 	
 	//TODO: allow user to go back with back button
 	
@@ -29001,16 +29113,15 @@
 	    event.preventDefault();
 	
 	    var movie = {
-	      show_title: this.props.nicCage[0].show_title,
-	      release_year: this.props.nicCage[0].release_year,
-	      poster: this.props.nicCage[0].poster
+	      title: this.props.nicCage[0].show_title,
+	      releaseYear: this.props.nicCage[0].release_year,
+	      posterUrl: this.props.nicCage[0].poster
 	    };
 	
 	    this.props.dispatch(userActions.saveMovie(movie));
 	  },
 	  render: function render() {
 	    var cageGif = "../assets/images/" + this.props.nicCage[0].gif;
-	    console.log('getting nic gif', cageGif);
 	
 	    // console.log('show ID', showId);
 	    return React.createElement(
@@ -29062,7 +29173,7 @@
 	      ),
 	      React.createElement(
 	        'form',
-	        { onSubmit: this.saveMovie, action: 'http://netflix.com/title/{showId}' },
+	        { onSubmit: this.saveMovie, action: 'http://netflix.com/WiPlayer?movieid={showId}' },
 	        React.createElement('input', { type: 'submit', value: 'Watch it now!' })
 	      )
 	    );
@@ -29080,7 +29191,7 @@
 	module.exports = Container;
 
 /***/ },
-/* 264 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29104,7 +29215,6 @@
 	  getMovie: function getMovie(event) {
 	    event.preventDefault();
 	
-	    console.log('getting a movie nowwwwwww');
 	    //makes API call to Netflix Roulette and
 	    //takes user to page with movie details
 	
@@ -29158,7 +29268,6 @@
 	  }
 	});
 	
-	//TODO: Takes you to MovieGenerator with random movie
 	var MovieButton = React.createClass({
 	  displayName: 'MovieButton',
 	
@@ -29184,120 +29293,22 @@
 	module.exports = Container;
 
 /***/ },
-/* 265 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var fetch = __webpack_require__(258);
+	var combineReducers = __webpack_require__(179).combineReducers;
 	
-	var SAVE_MOVIE = 'SAVE_MOVIE';
+	var user = __webpack_require__(262).userReducer;
+	var movie = __webpack_require__(256).movieReducer;
 	
-	var saveMovie = function saveMovie(movie) {
-	  return function (dispatch) {
-	    return fetch('http://localhost:8080/savemovie', {
-	      method: 'POST',
-	      headers: {
-	        'Accept': 'application/json',
-	        'Content-Type': 'application/json'
-	      },
-	      body: JSON.stringify({
-	        show_title: movie.show_title,
-	        release_year: movie.release_year,
-	        poster: movie.poster
-	      })
-	    }).then(function (response) {
-	      if (response.status < 200 || response.status >= 300) {
-	        var err = new Error(response.statusText);
-	        err.response = response;
-	        throw err;
-	      }
-	      return response;
-	    }).then(function (data) {
-	      return dispatch(movieSaved());
-	    }).catch(function (err) {
-	      return dispatch(movieNotSaved());
-	    });
-	  };
-	};
+	var reducers = combineReducers({
+	  user: user,
+	  movie: movie
+	});
 	
-	var MOVIE_SAVED = 'MOVIE_SAVED';
-	var movieSaved = function movieSaved() {
-	  return {
-	    type: MOVIE_SAVED
-	  };
-	};
-	
-	var MOVIE_NOT_SAVED = 'MOVIE_NOT_SAVED';
-	var movieNotSaved = function movieNotSaved() {
-	  return {
-	    type: MOVIE_NOT_SAVED
-	  };
-	};
-	
-	var STORE_MOVIE = 'STORE_MOVIE';
-	var storeMovie = function storeMovie(movie) {
-	  return {
-	    type: STORE_MOVIE,
-	    movie: movie
-	  };
-	};
-	
-	exports.SAVE_MOVIE = SAVE_MOVIE;
-	exports.saveMovie = saveMovie;
-	exports.MOVIE_SAVED = MOVIE_SAVED;
-	exports.movieSaved = movieSaved;
-	exports.MOVIE_NOT_SAVED = MOVIE_NOT_SAVED;
-	exports.movieNotSaved = movieNotSaved;
-	exports.STORE_MOVIE = STORE_MOVIE;
-	exports.storeMovie = storeMovie;
-
-/***/ },
-/* 266 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var actions = __webpack_require__(265);
-	var update = __webpack_require__(260);
-	
-	var initialState = {
-	  confirmed: false,
-	  show_title: null,
-	  release_year: null,
-	  poster: null
-	};
-	
-	exports.userReducer = function (state, action) {
-	  state = state || initialState;
-	  if (action.type === actions.MOVIE_SAVED) {
-	    var newState = update(state, {
-	      $set: {
-	        confirmed: true
-	      }
-	    });
-	    state = newState;
-	  } else if (action.type === actions.MOVIE_NOT_SAVED) {
-	    console.log('==========MOVIE_NOT_SAVED==========');
-	    var newState = update(state, {
-	      $set: {
-	        confirmed: false
-	      }
-	    });
-	    state = newState;
-	  } else if (action.type === actions.STORE_MOVIE) {
-	    console.log('STORING MOVIE');
-	    var newState = update(state, {
-	      $set: {
-	        show_title: action.movie.show_title,
-	        release_year: action.movie.release_year,
-	        poster: action.movie.poster
-	      }
-	    });
-	    state = newState;
-	  }
-	  return state;
-	};
+	exports.reducers = reducers;
 
 /***/ }
 /******/ ]);

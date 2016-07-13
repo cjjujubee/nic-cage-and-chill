@@ -2,19 +2,15 @@ var fetch = require('isomorphic-fetch');
 
 var SAVE_MOVIE = 'SAVE_MOVIE';
 
-var saveMovie = function(movie) {
+var saveMovie = function(movie, userId) {
   return function(dispatch) {
-    return fetch('http://localhost:8080/savemovie', {
-      method: 'POST',
+    return fetch('http://localhost:8080/users/' + userId, {
+      method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        show_title: movie.show_title,
-        release_year: movie.release_year,
-        poster: movie.poster
-      })
+      body: JSON.stringify(movie)
     })
     .then(function(response) {
       if (response.status < 200 || response.status >= 300) {

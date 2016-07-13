@@ -3,10 +3,7 @@ var createStore = redux.createStore;
 var applyMiddleware = redux.applyMiddleware;
 var thunk = require('redux-thunk').default;
 
-var movie = require('./reducers/movie');
-var user = require('./reducers/user');
+var combined = require('./reducers/combined')
 
-var store = createStore(movie.movieReducer, applyMiddleware(thunk));
+var store = createStore(combined.reducers, applyMiddleware(thunk));
 module.exports  = store;
-
-//FIX COMBINE REDUCERS

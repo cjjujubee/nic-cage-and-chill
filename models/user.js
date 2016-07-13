@@ -2,9 +2,15 @@ var mongoose = require('mongoose');
 
 var UserSchema = new mongoose.Schema({
   name: String,
-  email: String
+  email: String,
+  movies: [{
+    title: String,
+    releaseYear: Number,
+    posterUrl: String,
+    userId: String
+  }]
 });
 
-var User = mongoose.model('UserMovie', UserSchema);
+var User = mongoose.model('User', UserSchema);
 
 module.exports = User;

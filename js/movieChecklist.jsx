@@ -15,7 +15,6 @@ var MovieChecklist = React.createClass({
   getMovie: function(event) {
     event.preventDefault();
 
-    console.log('getting a movie nowwwwwww');
     //makes API call to Netflix Roulette and
     //takes user to page with movie details
 
@@ -47,7 +46,6 @@ var MovieChecklist = React.createClass({
   }
 });
 
-//TODO: Takes you to MovieGenerator with random movie
 var MovieButton = React.createClass({
   render: function() {
     return (
