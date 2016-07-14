@@ -15,7 +15,8 @@ var FrontPage = React.createClass({
       <section className="intro">
         <p>Not sure what movie to watch? Love Nicolas Cage? Let us figure out your Nic Cage and Chill</p>
         <div className="start-nic-caging">
-          <StartButton text="Let's get started!"/>
+          <StartButton text="Let's get started!">
+          </StartButton>
         </div>
       </section>
     );
@@ -32,7 +33,7 @@ var StartButton = React.createClass({
     },
   render: function() {
     return (
-      <button type="submit" onClick={this.handleClick}> {this.props.text} </button>
+      <button type="submit"><Link to={'/users'}>{this.props.text} </Link></button>
     );
   }
 });
