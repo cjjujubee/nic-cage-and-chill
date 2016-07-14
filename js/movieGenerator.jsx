@@ -26,15 +26,16 @@ var MovieGenerator = React.createClass({
     event.preventDefault();
 
     var movie = {
-      title: this.props.nicCage[0].show_title,
-      releaseYear: this.props.nicCage[0].release_year,
-      posterUrl: this.props.nicCage[0].poster
+      title: this.props.nicCage.movie[0].show_title,
+      releaseYear: this.props.nicCage.movie[0].release_year,
+      posterUrl: this.props.nicCage.movie[0].poster
     };
 
     this.props.dispatch(userActions.saveMovie(movie));
   },
   render: function() {
-    var cageGif = "../assets/images/" + this.props.nicCage[0].gif;
+      console.log(this.props)
+    var cageGif = "../assets/images/cage_001.gif";
 
     // console.log('show ID', showId);
     return (
@@ -43,11 +44,11 @@ var MovieGenerator = React.createClass({
         <img src={cageGif} alt="Nic Cage Gif"/>
         <div className="movieDetails">
           <ul>
-            <li>Title: {this.props.nicCage[0].show_title}</li>
-            <li>Released: {this.props.nicCage[0].release_year}</li>
-            <li>Rating: {this.props.nicCage[0].rating}</li>
-            <li>Summary: {this.props.nicCage[0].summary}</li>
-            <li><img src={this.props.nicCage[0].poster} alt="movie poster"/> </li>
+            <li>Title: {this.props.nicCage.movie[0].show_title}</li>
+            <li>Released: {this.props.nicCage.movie[0].release_year}</li>
+            <li>Rating: {this.props.nicCage.movie[0].rating}</li>
+            <li>Summary: {this.props.nicCage.movie[0].summary}</li>
+            <li><img src="" alt="movie poster"/> </li>
           </ul>
         </div>
         <form onSubmit={this.saveMovie} action="http://netflix.com/WiPlayer?movieid={showId}">

@@ -16,7 +16,7 @@ var store = require('../redux/store');
 var Login = React.createClass({
     render: function() {
         return (
-            <section className="userModal">
+            <section className="loginModal">
                 <h1>Login here</h1>
             </section>
         )
