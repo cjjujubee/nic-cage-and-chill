@@ -62,12 +62,12 @@
 	
 	//components
 	
-	var FrontPage = __webpack_require__(264);
-	var MovieGenerator = __webpack_require__(265);
-	var MovieChecklist = __webpack_require__(266);
+	var FrontPage = __webpack_require__(265);
+	var MovieGenerator = __webpack_require__(266);
+	var MovieChecklist = __webpack_require__(267);
 	
 	//actions
-	var movieActions = __webpack_require__(257);
+	var movieActions = __webpack_require__(264);
 	
 	var NicCage = React.createClass({
 	  displayName: 'NicCage',
@@ -28176,7 +28176,7 @@
 	var applyMiddleware = redux.applyMiddleware;
 	var thunk = __webpack_require__(255).default;
 	
-	var combined = __webpack_require__(267);
+	var combined = __webpack_require__(256);
 	
 	var store = createStore(combined.reducers, applyMiddleware(thunk));
 	module.exports = store;
@@ -28215,54 +28215,17 @@
 
 	'use strict';
 	
-	var actions = __webpack_require__(257);
-	var update = __webpack_require__(260);
+	var combineReducers = __webpack_require__(179).combineReducers;
 	
-	var initialState = [{
-	  gif: null,
-	  show_id: null,
-	  show_title: null,
-	  release_year: null,
-	  rating: null,
-	  summary: null,
-	  poster: null
-	}];
+	var user = __webpack_require__(257).userReducer;
+	var movie = __webpack_require__(263).movieReducer;
 	
-	exports.movieReducer = function (state, action) {
-	  state = state || initialState;
-	  if (action.type === actions.GET_MOVIE_SUCCESS) {
-	    var movie = action.data;
+	var reducers = combineReducers({
+	  user: user,
+	  movie: movie
+	});
 	
-	    //finds length of Nicolas Cage movies array to randomly generate
-	    //number for random movie
-	    var numberOfMovies = movie.length;
-	
-	    var randomNumber = Math.floor(Math.random() * numberOfMovies + 1);
-	    var randomMovie = movie[randomNumber];
-	
-	    //random gif generator
-	    var gifArray = ['cage_001', 'cage_002', 'cage_003', 'cage_004', 'cage_005', 'cage_006', 'cage_007', 'cage_008', 'cage_009', 'cage_010'];
-	    var randomGifNumber = Math.floor(Math.random() * gifArray.length + 1);
-	    var randomGif = gifArray[randomGifNumber] + '.gif';
-	
-	    var newState = update(state, { 0: {
-	        $set: {
-	          gif: randomGif,
-	          show_id: randomMovie.show_id,
-	          show_title: randomMovie.show_title,
-	          release_year: randomMovie.release_year,
-	          rating: randomMovie.rating,
-	          summary: randomMovie.summary,
-	          poster: randomMovie.poster
-	        }
-	      } });
-	    console.log('new state:', newState);
-	    state = newState;
-	  } else if (action.type === actions.GET_MOVIE_ERROR) {
-	    console.log(action.err.response.status); //logs out error
-	  }
-	  return state;
-	};
+	exports.reducers = reducers;
 
 /***/ },
 /* 257 */
@@ -28270,73 +28233,126 @@
 
 	'use strict';
 	
-	var fetch = __webpack_require__(258);
+	var actions = __webpack_require__(258);
+	var update = __webpack_require__(261);
 	
-	var getMovie = function getMovie() {
-	  console.log('getting a movie!');
+	var initialState = {
+	  confirmed: false,
+	  show_title: null,
+	  release_year: null,
+	  poster: null
+	};
 	
-	  var options = {
-	    base_url: 'http://netflixroulette.net/api/api.php',
-	    actor: '?actor=Nicolas%20Cage'
-	  };
+	exports.userReducer = function (state, action) {
+	  state = state || initialState;
+	  if (action.type === actions.MOVIE_SAVED) {
+	    var newState = update(state, {
+	      $set: {
+	        confirmed: true
+	      }
+	    });
+	    state = newState;
+	  } else if (action.type === actions.MOVIE_NOT_SAVED) {
+	    console.log('==========MOVIE_NOT_SAVED==========');
+	    var newState = update(state, {
+	      $set: {
+	        confirmed: false
+	      }
+	    });
+	    state = newState;
+	  } else if (action.type === actions.STORE_MOVIE) {
+	    console.log('STORING MOVIE');
+	    var newState = update(state, {
+	      $set: {
+	        show_title: action.movie.show_title,
+	        release_year: action.movie.release_year,
+	        poster: action.movie.poster
+	      }
+	    });
+	    state = newState;
+	  }
+	  return state;
+	};
+
+/***/ },
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
 	
-	  var searchResult = options.base_url + options.actor;
+	var fetch = __webpack_require__(259);
 	
+	var SAVE_MOVIE = 'SAVE_MOVIE';
+	
+	var saveMovie = function saveMovie(movie, userId) {
 	  return function (dispatch) {
-	    return fetch(searchResult).then(function (result) {
-	      if (result.status < 200 || result.status >= 300) {
-	        var err = new Error(result.statusText);
-	        err.response = result;
+	    return fetch('http://localhost:8080/users/' + userId, {
+	      method: 'PUT',
+	      headers: {
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json'
+	      },
+	      body: JSON.stringify(movie)
+	    }).then(function (response) {
+	      if (response.status < 200 || response.status >= 300) {
+	        var err = new Error(response.statusText);
+	        err.response = response;
 	        throw err;
 	      }
-	      return result;
+	      return response;
 	    }).then(function (data) {
-	      return data.json();
-	    }).then(function (data) {
-	      return dispatch(getMovieSuccess(data));
+	      return dispatch(movieSaved());
 	    }).catch(function (err) {
-	      return dispatch(getMovieError(err));
+	      return dispatch(movieNotSaved());
 	    });
 	  };
 	};
 	
-	var GET_MOVIE_SUCCESS = 'GET_MOVIE_SUCCESS';
-	var getMovieSuccess = function getMovieSuccess(data) {
+	var MOVIE_SAVED = 'MOVIE_SAVED';
+	var movieSaved = function movieSaved() {
 	  return {
-	    type: GET_MOVIE_SUCCESS,
-	    data: data
+	    type: MOVIE_SAVED
 	  };
 	};
 	
-	var GET_MOVIE_ERROR = 'GET_MOVIE_ERROR';
-	var getMovieError = function getMovieError(err) {
-	  console.log('MOVIE FAILURE', err);
+	var MOVIE_NOT_SAVED = 'MOVIE_NOT_SAVED';
+	var movieNotSaved = function movieNotSaved() {
 	  return {
-	    type: GET_MOVIE_ERROR,
-	    err: err
+	    type: MOVIE_NOT_SAVED
 	  };
 	};
 	
-	exports.GET_MOVIE_SUCCESS = GET_MOVIE_SUCCESS;
-	exports.getMovieSuccess = getMovieSuccess;
-	exports.GET_MOVIE_ERROR = GET_MOVIE_ERROR;
-	exports.getMovieError = getMovieError;
-	exports.getMovie = getMovie;
+	var STORE_MOVIE = 'STORE_MOVIE';
+	var storeMovie = function storeMovie(movie) {
+	  return {
+	    type: STORE_MOVIE,
+	    movie: movie
+	  };
+	};
+	
+	exports.SAVE_MOVIE = SAVE_MOVIE;
+	exports.saveMovie = saveMovie;
+	exports.MOVIE_SAVED = MOVIE_SAVED;
+	exports.movieSaved = movieSaved;
+	exports.MOVIE_NOT_SAVED = MOVIE_NOT_SAVED;
+	exports.movieNotSaved = movieNotSaved;
+	exports.STORE_MOVIE = STORE_MOVIE;
+	exports.storeMovie = storeMovie;
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// the whatwg-fetch polyfill installs the fetch() function
 	// on the global object (window or self)
 	//
 	// Return that as the export for use in Webpack, Browserify etc.
-	__webpack_require__(259);
+	__webpack_require__(260);
 	module.exports = self.fetch.bind(self);
 
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports) {
 
 	(function(self) {
@@ -28775,13 +28791,13 @@
 
 
 /***/ },
-/* 260 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(261);
+	module.exports = __webpack_require__(262);
 
 /***/ },
-/* 261 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -28900,119 +28916,121 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 262 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var actions = __webpack_require__(263);
-	var update = __webpack_require__(260);
-	
-	var initialState = {
-	  confirmed: false,
-	  show_title: null,
-	  release_year: null,
-	  poster: null
-	};
-	
-	exports.userReducer = function (state, action) {
-	  state = state || initialState;
-	  if (action.type === actions.MOVIE_SAVED) {
-	    var newState = update(state, {
-	      $set: {
-	        confirmed: true
-	      }
-	    });
-	    state = newState;
-	  } else if (action.type === actions.MOVIE_NOT_SAVED) {
-	    console.log('==========MOVIE_NOT_SAVED==========');
-	    var newState = update(state, {
-	      $set: {
-	        confirmed: false
-	      }
-	    });
-	    state = newState;
-	  } else if (action.type === actions.STORE_MOVIE) {
-	    console.log('STORING MOVIE');
-	    var newState = update(state, {
-	      $set: {
-	        show_title: action.movie.show_title,
-	        release_year: action.movie.release_year,
-	        poster: action.movie.poster
-	      }
-	    });
-	    state = newState;
-	  }
-	  return state;
-	};
-
-/***/ },
 /* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var fetch = __webpack_require__(258);
+	var actions = __webpack_require__(264);
+	var update = __webpack_require__(261);
 	
-	var SAVE_MOVIE = 'SAVE_MOVIE';
+	var initialState = [{
+	  gif: null,
+	  show_id: null,
+	  show_title: null,
+	  release_year: null,
+	  rating: null,
+	  summary: null,
+	  poster: null
+	}];
 	
-	var saveMovie = function saveMovie(movie, userId) {
+	exports.movieReducer = function (state, action) {
+	  state = state || initialState;
+	  if (action.type === actions.GET_MOVIE_SUCCESS) {
+	    var movie = action.data;
+	
+	    //finds length of Nicolas Cage movies array to randomly generate
+	    //number for random movie
+	    var numberOfMovies = movie.length;
+	
+	    var randomNumber = Math.floor(Math.random() * numberOfMovies + 1);
+	    var randomMovie = movie[randomNumber];
+	
+	    //random gif generator
+	    var gifArray = ['cage_001', 'cage_002', 'cage_003', 'cage_004', 'cage_005', 'cage_006', 'cage_007', 'cage_008', 'cage_009', 'cage_010'];
+	    var randomGifNumber = Math.floor(Math.random() * gifArray.length + 1);
+	    var randomGif = gifArray[randomGifNumber] + '.gif';
+	
+	    var newState = update(state, { 0: {
+	        $set: {
+	          gif: randomGif,
+	          show_id: randomMovie.show_id,
+	          show_title: randomMovie.show_title,
+	          release_year: randomMovie.release_year,
+	          rating: randomMovie.rating,
+	          summary: randomMovie.summary,
+	          poster: randomMovie.poster
+	        }
+	      } });
+	    console.log('new state:', newState);
+	    state = newState;
+	  } else if (action.type === actions.GET_MOVIE_ERROR) {
+	    console.log(action.err.response.status); //logs out error
+	  }
+	  return state;
+	};
+
+/***/ },
+/* 264 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var fetch = __webpack_require__(259);
+	
+	var getMovie = function getMovie() {
+	  console.log('getting a movie!');
+	
+	  var options = {
+	    base_url: 'http://netflixroulette.net/api/api.php',
+	    actor: '?actor=Nicolas%20Cage'
+	  };
+	
+	  var searchResult = options.base_url + options.actor;
+	
 	  return function (dispatch) {
-	    return fetch('http://localhost:8080/users/' + userId, {
-	      method: 'PUT',
-	      headers: {
-	        'Accept': 'application/json',
-	        'Content-Type': 'application/json'
-	      },
-	      body: JSON.stringify(movie)
-	    }).then(function (response) {
-	      if (response.status < 200 || response.status >= 300) {
-	        var err = new Error(response.statusText);
-	        err.response = response;
+	    return fetch(searchResult).then(function (result) {
+	      if (result.status < 200 || result.status >= 300) {
+	        var err = new Error(result.statusText);
+	        err.response = result;
 	        throw err;
 	      }
-	      return response;
+	      return result;
 	    }).then(function (data) {
-	      return dispatch(movieSaved());
+	      return data.json();
+	    }).then(function (data) {
+	      return dispatch(getMovieSuccess(data));
 	    }).catch(function (err) {
-	      return dispatch(movieNotSaved());
+	      return dispatch(getMovieError(err));
 	    });
 	  };
 	};
 	
-	var MOVIE_SAVED = 'MOVIE_SAVED';
-	var movieSaved = function movieSaved() {
+	var GET_MOVIE_SUCCESS = 'GET_MOVIE_SUCCESS';
+	var getMovieSuccess = function getMovieSuccess(data) {
 	  return {
-	    type: MOVIE_SAVED
+	    type: GET_MOVIE_SUCCESS,
+	    data: data
 	  };
 	};
 	
-	var MOVIE_NOT_SAVED = 'MOVIE_NOT_SAVED';
-	var movieNotSaved = function movieNotSaved() {
+	var GET_MOVIE_ERROR = 'GET_MOVIE_ERROR';
+	var getMovieError = function getMovieError(err) {
+	  console.log('MOVIE FAILURE', err);
 	  return {
-	    type: MOVIE_NOT_SAVED
+	    type: GET_MOVIE_ERROR,
+	    err: err
 	  };
 	};
 	
-	var STORE_MOVIE = 'STORE_MOVIE';
-	var storeMovie = function storeMovie(movie) {
-	  return {
-	    type: STORE_MOVIE,
-	    movie: movie
-	  };
-	};
-	
-	exports.SAVE_MOVIE = SAVE_MOVIE;
-	exports.saveMovie = saveMovie;
-	exports.MOVIE_SAVED = MOVIE_SAVED;
-	exports.movieSaved = movieSaved;
-	exports.MOVIE_NOT_SAVED = MOVIE_NOT_SAVED;
-	exports.movieNotSaved = movieNotSaved;
-	exports.STORE_MOVIE = STORE_MOVIE;
-	exports.storeMovie = storeMovie;
+	exports.GET_MOVIE_SUCCESS = GET_MOVIE_SUCCESS;
+	exports.getMovieSuccess = getMovieSuccess;
+	exports.GET_MOVIE_ERROR = GET_MOVIE_ERROR;
+	exports.getMovieError = getMovieError;
+	exports.getMovie = getMovie;
 
 /***/ },
-/* 264 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29056,10 +29074,13 @@
 	var StartButton = React.createClass({
 	  displayName: 'StartButton',
 	
+	  handleClick: function handleClick() {
+	    alert('hi');
+	  },
 	  render: function render() {
 	    return React.createElement(
 	      'button',
-	      { type: 'submit' },
+	      { type: 'submit', onClick: this.handleClick },
 	      ' ',
 	      this.props.text,
 	      ' '
@@ -29078,7 +29099,7 @@
 	module.exports = Container;
 
 /***/ },
-/* 265 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29094,7 +29115,7 @@
 	
 	var store = __webpack_require__(254);
 	
-	var userActions = __webpack_require__(263);
+	var userActions = __webpack_require__(258);
 	
 	//provides movie details for user with option
 	//to navigate to Netflix with correct movie ID
@@ -29191,7 +29212,7 @@
 	module.exports = Container;
 
 /***/ },
-/* 266 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -29207,7 +29228,7 @@
 	
 	var store = __webpack_require__(254);
 	
-	var movieActions = __webpack_require__(257);
+	var movieActions = __webpack_require__(264);
 	
 	var MovieChecklist = React.createClass({
 	  displayName: 'MovieChecklist',
@@ -29291,24 +29312,6 @@
 	var Container = connect(mapStateToProps)(MovieChecklist);
 	
 	module.exports = Container;
-
-/***/ },
-/* 267 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var combineReducers = __webpack_require__(179).combineReducers;
-	
-	var user = __webpack_require__(262).userReducer;
-	var movie = __webpack_require__(256).movieReducer;
-	
-	var reducers = combineReducers({
-	  user: user,
-	  movie: movie
-	});
-	
-	exports.reducers = reducers;
 
 /***/ }
 /******/ ]);

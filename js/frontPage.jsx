@@ -27,9 +27,12 @@ var FrontPage = React.createClass({
 //to movieChecklist component
 
 var StartButton = React.createClass({
+    handleClick: function() {
+        alert('hi');
+    },
   render: function() {
     return (
-      <button type="submit"> {this.props.text} </button>
+      <button type="submit" onClick={this.handleClick}> {this.props.text} </button>
     );
   }
 });
