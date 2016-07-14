@@ -3,6 +3,8 @@ require('./connect');
 var User = require('../models/user');
 var mongoose = require('mongoose');
 
+User.collection.drop();
+
 User.create({
   name: 'Bob Doe',
   email: 'bobdoe@abc.com',
