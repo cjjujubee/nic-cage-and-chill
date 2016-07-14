@@ -7,7 +7,7 @@ var User = require('../models/user');
 
 router.get('/users', function(req, res) {
   User.find({}, function(err, users) {
-    res.json(users);
+    res.json("hi");
   });
 });
 
@@ -30,7 +30,7 @@ router.post('/users', function(req, res) {
 });
 
 //finds specific user and associated list of movies
-router.get('/users/:userId', funtion(req, res) {
+router.get('/users/:userId', function(req, res) {
   User.findOne({_id: req.params.userId}, function(err, user) {
     if (err) {
       res.status(500);
