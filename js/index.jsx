@@ -15,6 +15,7 @@ var store = require('../redux/store');
 //components
 
 var FrontPage = require('./frontPage');
+var Login = require('./login')
 var MovieGenerator = require('./movieGenerator');
 var MovieChecklist = require('./movieChecklist');
 
@@ -56,6 +57,7 @@ var routes = (
         <IndexRoute component={FrontPage} />
         <Route path="/yourmovie" component={MovieGenerator} />
         <Route path="/account" component={MovieChecklist} />
+        <Route path="/login" component={Login} />
       </Route>
     </Router>
   </Provider>

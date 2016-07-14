@@ -33,7 +33,7 @@ var StartButton = React.createClass({
     },
   render: function() {
     return (
-      <button type="submit"><Link to={'/users'}>{this.props.text} </Link></button>
+      <button type="submit"><Link to={'/login'}>{this.props.text} </Link></button>
     );
   }
 });
