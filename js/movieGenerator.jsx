@@ -14,6 +14,8 @@ var userActions = require('../redux/actions/user');
 //provides movie details for user with option
 //to navigate to Netflix with correct movie ID
 //provided by the API
+//
+//
 
 //TODO: NEED TO FIGURE OUT HOW TO RETRIEVE USER ID TO SEND
 //TO BACKEND IN ORDER TO SAVE MOVIE VIA SAVEMOVIE ACTION
@@ -34,8 +36,11 @@ var MovieGenerator = React.createClass({
     this.props.dispatch(userActions.saveMovie(movie));
   },
   render: function() {
-      console.log(this.props)
+
     var cageGif = "../assets/images/cage_001.gif";
+    var movie = this.props.nicCage.movie[0];
+    var movieUrl = 'http://netflix.com/WiPlayer?movieid=' + movie.show_id;
+     console.log(movie[0])
 
     // console.log('show ID', showId);
     return (
@@ -44,15 +49,18 @@ var MovieGenerator = React.createClass({
         <img src={cageGif} alt="Nic Cage Gif"/>
         <div className="movieDetails">
           <ul>
-            <li>Title: {this.props.nicCage.movie[0].show_title}</li>
-            <li>Released: {this.props.nicCage.movie[0].release_year}</li>
-            <li>Rating: {this.props.nicCage.movie[0].rating}</li>
-            <li>Summary: {this.props.nicCage.movie[0].summary}</li>
+            <li>Title: {movie.show_title}</li>
+            <li>Released: {movie.release_year}</li>
+            <li>Rating: {movie.rating}</li>
+            <li>Summary: {movie.summary}</li>
             <li><img src="" alt="movie poster"/> </li>
           </ul>
         </div>
-        <form onSubmit={this.saveMovie} action="http://netflix.com/WiPlayer?movieid={showId}">
-          <input type="submit" value="Watch it now!"/>
+        <form onSubmit={this.saveMovie}>
+
+            <button type="submit">
+                <a href={movieUrl}>Watch it now!</a>
+            </button>
         </form>
       </section>
     );
