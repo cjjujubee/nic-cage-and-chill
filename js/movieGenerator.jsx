@@ -36,13 +36,10 @@ var MovieGenerator = React.createClass({
     this.props.dispatch(userActions.saveMovie(movie));
   },
   render: function() {
-
     var cageGif = "../assets/images/cage_001.gif";
     var movie = this.props.nicCage.movie[0];
     var movieUrl = 'http://netflix.com/WiPlayer?movieid=' + movie.show_id;
-     console.log(movie[0])
 
-    // console.log('show ID', showId);
     return (
       <section className="movie">
         <h2>"What's that like? What's it taste like? Describe it like Hemingway."</h2>
