@@ -22,8 +22,8 @@ app.use(express.static('public'));
 // app.use('/', userMovieRoutes);
 app.use('/', userRoutes);
 
-app.listen(8080, function() {
-    console.log('Running on port 8080');
+app.listen(8081, function() {
+    console.log('Running on port 8081');
 });
 
 exports.app = app;

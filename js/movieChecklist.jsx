@@ -11,6 +11,8 @@ var store = require('../redux/store.js');
 
 var movieActions = require('../redux/actions/movie');
 
+var userActions = require('../redux/actions/user');
+
 var MovieChecklist = React.createClass({
   getMovie: function(event) {
     event.preventDefault();
@@ -22,18 +24,17 @@ var MovieChecklist = React.createClass({
     hashHistory.push("/yourmovie");
   },
   render: function() {
+    console.log('nic cage user', this.props.nicCage);
     return (
       <section className="movie">
-        <h3>USER'S NAME</h3>
+        <h3>{this.props.nicCage.user.user.name}</h3>
         <img src="" alt="User Gravatar"/>
         <div className="movieChecklist">
           <h4>Nic Cage Movies You've Watched</h4>
-          <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+          <ul className="movieList">
+            {this.props.nicCage.user.user.movies.map((movie, i) =>
+              <li className="movieTitle" key={i}>{movie.title}</li>
+            )}
           </ul>
         </div>
         <form onSubmit={this.getMovie} className="movieTime">

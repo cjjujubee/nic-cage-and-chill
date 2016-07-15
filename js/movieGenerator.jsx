@@ -54,9 +54,8 @@ var MovieGenerator = React.createClass({
           </ul>
         </div>
         <form onSubmit={this.saveMovie}>
-
             <button type="submit">
-                <a href={movieUrl}>Watch it now!</a>
+                Watch it now!
             </button>
         </form>
       </section>

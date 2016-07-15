@@ -6,10 +6,14 @@ var Link = require('react-router').Link;
 var Router = router.Router;
 var Route = router.Route;
 var hashHistory = router.hashHistory;
+var userActions = require('../redux/actions/user');
 
 var store = require('../redux/store.js');
 
 var FrontPage = React.createClass({
+  componentWillMount: function() {
+    this.props.dispatch(userActions.getMovies());
+  },
   render: function() {
     return (
       <section className="intro">

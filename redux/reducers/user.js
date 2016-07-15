@@ -9,7 +9,8 @@ var initialState = {
   show_title: null,
   release_year: null,
   poster: null,
-  watch_history: []
+  watch_history: [],
+  user: null
 };
 
 exports.userReducer = function(state, action) {
@@ -39,6 +40,15 @@ exports.userReducer = function(state, action) {
         show_title: action.movie.show_title,
         release_year: action.movie.release_year,
         poster: action.movie.poster
+      }
+    });
+    state = newState;
+  }
+  else if (action.type === actions.GET_MOVIES_SUCCESS) {
+    console.log('setting user', action.movies);
+    var newState = update(state, {
+      $set: {
+        user: action.movies
       }
     });
     state = newState;
