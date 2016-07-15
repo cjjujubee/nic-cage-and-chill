@@ -4,8 +4,8 @@
   "description": "",
   "main": "./js/index.jsx",
   "scripts": {
-    "build": "npm run clean && npm run mkdir && npm run build:html && npm run build:jsx",
-    "watch": "npm run watch:html & npm run watch:css & npm run watch:jsx",
+    "build": "npm run clean && npm run mkdir && npm run build:html && npm run build:css && npm run build:jsx",
+    "watch": "npm run build && npm run watch:html & npm run watch:css & npm run watch:jsx",
     "test": "mocha --compilers js:babel-register test/**/*.js*",
     "serve": "http-server build",
     "start:server": "nodemon ./index.js",
@@ -17,8 +17,9 @@
     "build:js": "npm run clean:js && webpack",
     "watch:js": "npm run build:js && webpack --watch",
     "clean:js": "rm -f build/$npm_package_name.$npm_package_version.js build/$npm_package_name.$npm_package_version.js.map",
+    "build:css": "node-sass css/sass/main.scss build/css/main.css",
     "clean:css": "rm build/css/main.css",
-    "watch:css": "sass sass:build/css --watch",
+    "watch:css": "sass --watch css/sass:build/css",
     "build:jsx": "npm run clean:jsx && webpack",
     "watch:jsx": "npm run build:jsx && webpack --watch",
     "clean:jsx": "rm -f build/$npm_package_name.$npm_package_version.jsx build/$npm_package_name.$npm_package_version.jsx.map"
