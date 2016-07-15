@@ -23,48 +23,50 @@ var MovieChecklist = require('./movieChecklist');
 var movieActions = require('../redux/actions/movie');
 
 var NicCage = React.createClass({
-  render: function() {
-    return (
-      <div className="container">
-        <nav>
-          <ul className="nav-items">
-            <li>Home</li>
-            <li>Your Account</li>
-            <li>Log out</li>
-          </ul>
-        </nav>
-        <h1>Nic Cage and Chill</h1>
-        <div>
-          {this.props.children}
-        </div>
-      </div>
-    );
-  }
+    render: function() {
+        return (
+            <div className="container">
+                <nav>
+                    <ul className="nav-items">
+                        <li>
+                            <Link to="/">Home</Link>
+                        </li>
+                        <li>
+                            <Link to="#">Your Account</Link>
+                        </li>
+                        <li>
+                            <Link to="#">Log Out</Link>
+                        </li>
+                    </ul>
+                </nav>
+                <h1>Nic Cage and Chill</h1>
+                <div>
+                    {this.props.children}
+                </div>
+            </div>
+        );
+    }
 });
 
 var mapStateToProps = function(state, props) {
-  return {
-    nicCage: state
-  };
+    return {nicCage: state};
 };
 
 var Container = connect(mapStateToProps)(NicCage);
 
 var routes = (
-  <Provider store={store}>
-    <Router history={hashHistory}>
-      <Route path="/" component={NicCage}>
-        <IndexRoute component={FrontPage} />
-        <Route path="/yourmovie" component={MovieGenerator} />
-        <Route path="/account" component={MovieChecklist} />
-        <Route path="/login" component={Login} />
-      </Route>
-    </Router>
-  </Provider>
+    <Provider store={store}>
+        <Router history={hashHistory}>
+            <Route path="/" component={NicCage}>
+                <IndexRoute component={FrontPage}/>
+                <Route path="/yourmovie" component={MovieGenerator}/>
+                <Route path="/account" component={MovieChecklist}/>
+                <Route path="/login" component={Login}/>
+            </Route>
+        </Router>
+    </Provider>
 );
 
 document.addEventListener('DOMContentLoaded', function() {
-  ReactDOM.render(
-    routes, document.getElementById('app')
-  );
+    ReactDOM.render(routes, document.getElementById('app'));
 });
