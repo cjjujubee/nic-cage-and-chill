@@ -50,7 +50,7 @@ var MovieGenerator = React.createClass({
             <li>Released: {movie.release_year}</li>
             <li>Rating: {movie.rating}</li>
             <li>Summary: {movie.summary}</li>
-            <li><img src="" alt="movie poster"/> </li>
+            <li><img src={movie.poster} alt="movie poster"/> </li>
           </ul>
         </div>
         <form onSubmit={this.saveMovie}>
