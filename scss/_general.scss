@@ -6,6 +6,8 @@ body {
   background-color: salmon;
 }
 
+a {text-decoration: none;}
+
 /* nav bar */
 nav {
   background-color: blue;
@@ -24,4 +26,5 @@ nav {
       text-decoration: none;
     }
   }
+  a, a:visited {color: white}
 }
