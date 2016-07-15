@@ -1,12 +1,15 @@
 var actions = require('../actions/user');
 var update = require('react-addons-update');
 
+
+//TODO: use watch_hstory to store movie objects
+// and populate the checklist?
 var initialState = {
   confirmed: false,
   show_title: null,
   release_year: null,
   poster: null,
-  watch_history: null
+  watch_history: []
 };
 
 exports.userReducer = function(state, action) {
