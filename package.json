@@ -4,7 +4,7 @@
   "description": "",
   "main": "./js/index.jsx",
   "scripts": {
-    "build": "npm run clean && npm run mkdir && npm run build:html && npm run build:css && npm run build:jsx",
+    "build": "npm run clean && npm run mkdir && npm run build:html && npm run build:css && npm run build:jsx && npm run build:assets",
     "watch": "npm run build && npm run watch:html & npm run watch:css & npm run watch:jsx",
     "test": "mocha --compilers js:babel-register test/**/*.js*",
     "serve": "http-server build",
@@ -22,7 +22,9 @@
     "watch:css": "sass --watch scss/bundle.scss:build/css/main.css",
     "build:jsx": "npm run clean:jsx && webpack",
     "watch:jsx": "npm run build:jsx && webpack --watch",
-    "clean:jsx": "rm -f build/$npm_package_name.$npm_package_version.jsx build/$npm_package_name.$npm_package_version.jsx.map"
+    "clean:jsx": "rm -f build/$npm_package_name.$npm_package_version.jsx build/$npm_package_name.$npm_package_version.jsx.map",
+    "build:assets": "rsync -rp assets/ build/assets",
+    "clean:assets": "rm -rf build/assets"
   },
   "author": "Connie Jew",
   "license": "ISC",
