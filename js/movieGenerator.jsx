@@ -36,8 +36,8 @@ var MovieGenerator = React.createClass({
     this.props.dispatch(userActions.saveMovie(movie));
   },
   render: function() {
-    var cageGif = "../assets/images/cage_001.gif";
     var movie = this.props.nicCage.movie[0];
+    var cageGif = "../assets/images/"+movie.gif;
     var movieUrl = 'http://netflix.com/WiPlayer?movieid=' + movie.show_id;
 
     return (
