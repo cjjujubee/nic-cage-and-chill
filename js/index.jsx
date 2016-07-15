@@ -26,23 +26,20 @@ var NicCage = React.createClass({
     render: function() {
         return (
             <div className="container">
-                <nav>
-                    <ul className="nav-items">
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="#">Your Account</Link>
-                        </li>
-                        <li>
-                            <Link to="#">Log Out</Link>
-                        </li>
-                    </ul>
-                </nav>
-                <h1>Nic Cage and Chill</h1>
-                <div>
-                    {this.props.children}
-                </div>
+              <nav>
+                <Link to="/" className="navTitle">Nic Cage and Chill</Link>
+                <ul className="nav-items">
+                  <li>
+                    <Link to="/account">Your Account</Link>
+                  </li>
+                  <li>
+                    <Link to="#">Log Out</Link>
+                  </li>
+                </ul>
+              </nav>
+              <div>
+                {this.props.children}
+              </div>
             </div>
         );
     }

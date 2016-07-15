@@ -23,6 +23,9 @@ var userActions = require('../redux/actions/user');
 
 //TODO: allow user to go back with back button
 
+//TODO: figure out how to dispatch saveMovie action and
+//then go to Netflix
+
 var MovieGenerator = React.createClass({
   saveMovie: function(event) {
     event.preventDefault();
@@ -45,12 +48,14 @@ var MovieGenerator = React.createClass({
         <h2>"What's that like? What's it taste like? Describe it like Hemingway."</h2>
         <img src={cageGif} alt="Nic Cage Gif"/>
         <div className="movieDetails">
-          <ul>
-            <li>Title: {movie.show_title}</li>
-            <li>Released: {movie.release_year}</li>
-            <li>Rating: {movie.rating}</li>
-            <li>Summary: {movie.summary}</li>
-            <li><img src={movie.poster} alt="movie poster"/> </li>
+          <object className="moviePoster" data={movie.poster}>
+            <img src="../assets/images/cage_default.gif" alt="Nic Cage Default" width="100" height="100" className="moviePoster2"/>
+          </object>
+          <ul className="movieInfo">
+            <li><strong>Title:</strong> {movie.show_title}</li>
+            <li><strong>Released:</strong> {movie.release_year}</li>
+            <li><strong>Rating:</strong> {movie.rating}</li>
+            <li><strong>Summary:</strong>{movie.summary}</li>
           </ul>
         </div>
         <form onSubmit={this.saveMovie}>

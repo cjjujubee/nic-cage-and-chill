@@ -28,7 +28,12 @@ var MovieChecklist = React.createClass({
     return (
       <section className="movie">
         <h3>{this.props.nicCage.user.user.name}</h3>
-        <img src="" alt="User Gravatar"/>
+        <img src="../assets/images/cage_gravatar.jpeg" alt="User Gravatar"/>
+        <form onSubmit={this.getMovie} className="movieTime">
+          <h4>Ready for more Nic Cage?</h4>
+          <p>Click below for your next Nic Cage movie!</p>
+          <MovieButton text="Cage me!"/>
+        </form>
         <div className="movieChecklist">
           <h4>Nic Cage Movies You've Watched</h4>
           <ul className="movieList">
@@ -37,11 +42,6 @@ var MovieChecklist = React.createClass({
             )}
           </ul>
         </div>
-        <form onSubmit={this.getMovie} className="movieTime">
-          <h4>Ready for more Nic Cage?</h4>
-          <p>Click below for your next Nic Cage movie!</p>
-          <MovieButton text="Cage me!"/>
-        </form>
       </section>
     );
   }

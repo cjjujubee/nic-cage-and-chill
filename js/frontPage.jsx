@@ -17,7 +17,9 @@ var FrontPage = React.createClass({
   render: function() {
     return (
       <section className="intro">
-        <p>Not sure what movie to watch? Love Nicolas Cage? Let us figure out your Nic Cage and Chill</p>
+        <h1 className="mainTitle">Nic Cage and Chill</h1>
+        <p className="appDescription">Not sure what movie to watch? Love Nicolas Cage?</p>
+        <p>Let us find your Nic Cage and Chill</p>
         <div className="start-nic-caging">
           <StartButton text="Let's get started!">
           </StartButton>

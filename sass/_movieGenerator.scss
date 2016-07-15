@@ -1,0 +1,18 @@
+.movieDetails ul {
+  list-style: none;
+  margin: 0 auto;
+  text-align: left;
+  padding-left: 100px;
+  width: 500px;
+}
+
+.moviePoster, .movePoster2{
+  float:left;
+  padding-left: 200px;
+  padding-right: 10px;
+}
+
+button {
+  display: inline-block;
+  margin: 0 auto;
+}
