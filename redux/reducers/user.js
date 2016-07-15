@@ -6,11 +6,13 @@ var initialState = {
   show_title: null,
   release_year: null,
   poster: null,
+  watch_history: null
 };
 
 exports.userReducer = function(state, action) {
   state = state || initialState;
   if (action.type === actions.MOVIE_SAVED) {
+      console.log('==========MOVIE_SAVED==========');
     var newState = update(state, {
       $set: {
         confirmed: true
