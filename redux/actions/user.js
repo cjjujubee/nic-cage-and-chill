@@ -2,9 +2,8 @@ var fetch = require('isomorphic-fetch');
 
 var SAVE_MOVIE = 'SAVE_MOVIE';
 var saveMovie = function(movie, userId) {
-    userId = userId || '5787e40433f304e0355c9121'
-  return function(dispatch) {
-    return fetch('http://localhost:8080/users/' + userId, { //TODO better id access
+  return function(dispatch) { //TODO better id access - get this ID from mongo for now
+    return fetch('http://localhost:8080/users/' + '5788861ee2f16f4356e1001e', {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
