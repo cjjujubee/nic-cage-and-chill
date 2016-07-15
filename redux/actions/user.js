@@ -4,7 +4,7 @@ var SAVE_MOVIE = 'SAVE_MOVIE';
 var saveMovie = function(movie, userId) {
     userId = userId || '5787e40433f304e0355c9121'
   return function(dispatch) {
-    return fetch('http://localhost:8080/users/' + userId, {
+    return fetch('http://localhost:8080/users/' + userId, { //TODO better id access
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
