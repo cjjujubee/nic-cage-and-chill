@@ -21,8 +21,7 @@ var FrontPage = React.createClass({
         <p className="appDescription">Not sure what movie to watch? Love Nicolas Cage?</p>
         <p>Let us find your Nic Cage and Chill</p>
         <div className="start-nic-caging">
-          <StartButton text="Let's get started!">
-          </StartButton>
+          <StartButton text="Let's get started!"></StartButton>
         </div>
       </section>
     );

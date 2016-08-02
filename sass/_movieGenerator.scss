@@ -2,17 +2,15 @@
   list-style: none;
   margin: 0 auto;
   text-align: left;
-  padding-left: 100px;
-  width: 500px;
+  width: 700px;
+  margin-top: 50px;
 }
 
-.moviePoster, .movePoster2{
-  float:left;
-  padding-left: 200px;
-  padding-right: 10px;
+.watchMovie {
+  margin-top: 50px;
 }
 
-button {
-  display: inline-block;
-  margin: 0 auto;
+img {
+  max-width: 300px;
+  max-height: 140px;
 }

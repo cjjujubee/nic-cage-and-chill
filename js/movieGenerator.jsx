@@ -48,21 +48,20 @@ var MovieGenerator = React.createClass({
         <h2>"What's that like? What's it taste like? Describe it like Hemingway."</h2>
         <img src={cageGif} alt="Nic Cage Gif"/>
         <div className="movieDetails">
-          <object className="moviePoster" data={movie.poster}>
-            <img src="../assets/images/cage_default.gif" alt="Nic Cage Default" width="100" height="100" className="moviePoster2"/>
-          </object>
           <ul className="movieInfo">
             <li><strong>Title:</strong> {movie.show_title}</li>
             <li><strong>Released:</strong> {movie.release_year}</li>
             <li><strong>Rating:</strong> {movie.rating}</li>
-            <li><strong>Summary:</strong>{movie.summary}</li>
+            <li><strong>Summary:</strong> {movie.summary}</li>
           </ul>
         </div>
-        <form onSubmit={this.saveMovie}>
+        <div className="watchMovie">
+          <form onSubmit={this.saveMovie}>
             <button type="submit">
                 Watch it now!
             </button>
-        </form>
+          </form>
+        </div>
       </section>
     );
   }

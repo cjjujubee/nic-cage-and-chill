@@ -53,14 +53,14 @@ var Container = connect(mapStateToProps)(NicCage);
 
 var routes = (
     <Provider store={store}>
-        <Router history={hashHistory}>
-            <Route path="/" component={NicCage}>
-                <IndexRoute component={FrontPage}/>
-                <Route path="/yourmovie" component={MovieGenerator}/>
-                <Route path="/account" component={MovieChecklist}/>
-                <Route path="/login" component={Login}/>
-            </Route>
-        </Router>
+      <Router history={hashHistory}>
+        <Route path="/" component={NicCage}>
+          <IndexRoute component={FrontPage}/>
+          <Route path="/yourmovie" component={MovieGenerator}/>
+          <Route path="/account" component={MovieChecklist}/>
+          <Route path="/login" component={Login}/>
+        </Route>
+      </Router>
     </Provider>
 );
 
