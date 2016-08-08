@@ -15,7 +15,8 @@ var store = require('../redux/store');
 //components
 
 var FrontPage = require('./frontPage');
-var Login = require('./login')
+var Login = require('./login');
+var SignUp = require('./signup');
 var MovieGenerator = require('./movieGenerator');
 var MovieChecklist = require('./movieChecklist');
 
@@ -24,24 +25,24 @@ var movieActions = require('../redux/actions/movie');
 
 var NicCage = React.createClass({
     render: function() {
-        return (
-            <div className="container">
-              <nav>
-                <Link to="/" className="navTitle">Nic Cage and Chill</Link>
-                <ul className="nav-items">
-                  <li>
-                    <Link to="/account">Your Account</Link>
-                  </li>
-                  <li>
-                    <Link to="#">Log Out</Link>
-                  </li>
-                </ul>
-              </nav>
-              <div>
-                {this.props.children}
-              </div>
-            </div>
-        );
+      return (
+        <div className="container">
+          <nav>
+            <Link to="/" className="navTitle">Nic Cage and Chill</Link>
+            <ul className="nav-items">
+              <li>
+                <Link to="/account">Your Account</Link>
+              </li>
+              <li>
+                <Link to="/login">Log In</Link>
+              </li>
+            </ul>
+          </nav>
+          <div>
+            {this.props.children}
+          </div>
+        </div>
+      );
     }
 });
 
@@ -59,6 +60,7 @@ var routes = (
           <Route path="/yourmovie" component={MovieGenerator}/>
           <Route path="/account" component={MovieChecklist}/>
           <Route path="/login" component={Login}/>
+          <Route path="/signup" component={SignUp}/>
         </Route>
       </Router>
     </Provider>

@@ -16,8 +16,13 @@ var store = require('../redux/store');
 var Login = React.createClass({
     render: function() {
         return (
-            <section className="loginModal">
+            <section className="login">
                 <h1>Login here</h1>
+                <form>
+                  Email address:<br></br><input type="text"></input>
+                  <br></br>
+                  <button type="submit"><Link to={'/account'}>Login!</Link></button>
+                </form>
             </section>
         )
     }

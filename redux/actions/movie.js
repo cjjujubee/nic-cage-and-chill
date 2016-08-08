@@ -1,8 +1,6 @@
 var fetch = require('isomorphic-fetch');
 
 var getMovie = function() {
-  console.log('getting a movie!');
-
   var options = {
     base_url: 'http://netflixroulette.net/api/api.php',
     actor: '?actor=Nicolas%20Cage'
