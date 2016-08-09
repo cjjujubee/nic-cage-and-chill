@@ -31,7 +31,7 @@ var FrontPage = React.createClass({
 var StartButton = React.createClass({
   render: function() {
     return (
-      <button type="submit"><Link to={'/signup'}>{this.props.text} </Link></button>
+      <button type="submit"><Link to={'/account'}>{this.props.text} </Link></button>
     );
   }
 });

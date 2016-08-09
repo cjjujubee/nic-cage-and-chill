@@ -14,8 +14,10 @@ router.get('/users', function(req, res) {
 //creates a new user
 
 router.post('/users', function(req, res) {
+  console.log('looking for my user', req.body);
   User.create({
-    name: req.body.name,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     email: req.body.email,
     movies: []
   }, function(err, user) {

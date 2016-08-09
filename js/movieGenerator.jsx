@@ -14,17 +14,6 @@ var userActions = require('../redux/actions/user');
 //provides movie details for user with option
 //to navigate to Netflix with correct movie ID
 //provided by the API
-//
-//
-
-//TODO: NEED TO FIGURE OUT HOW TO RETRIEVE USER ID TO SEND
-//TO BACKEND IN ORDER TO SAVE MOVIE VIA SAVEMOVIE ACTION
-//(USER.JS IN REDUX/ACTIONS FOLDER)
-
-//TODO: allow user to go back with back button
-
-//TODO: figure out how to dispatch saveMovie action and
-//then go to Netflix
 
 var MovieGenerator = React.createClass({
   saveMovie: function(event) {
@@ -40,7 +29,7 @@ var MovieGenerator = React.createClass({
   },
   render: function() {
     var movie = this.props.nicCage.movie[0];
-    var cageGif = "../assets/images/"+movie.gif;
+    var cageGif = "../assets/images/" + movie.gif;
     var movieUrl = 'http://netflix.com/WiPlayer?movieid=' + movie.show_id;
 
     return (

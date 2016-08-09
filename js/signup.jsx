@@ -9,26 +9,40 @@ var hashHistory = router.hashHistory;
 var IndexRoute = router.IndexRoute;
 var Link = require('react-router').Link;
 
-var Provider = require('react-redux').Provider;
 var store = require('../redux/store');
 
+var userActions = require('../redux/actions/user')
+
 var SignUp = React.createClass({
+  saveUser: function(event) {
+    event.preventDefault();
+
+    var user = {
+      firstName: this.refs.firstName.value,
+      lastName: this.refs.lastName.value,
+      email: this.refs.email.value
+    };
+    console.log('the user', user);
+    this.props.dispatch(userActions.saveUser(user));
+    setTimeout(function() {
+      hashHistory.push("/account");
+    }, 3000);
+  },
   render: function() {
     return (
-      <section className="signup">
+      <form className="signup-form" onSubmit={this.saveUser}>
         <h1>Sign Up</h1>
-        <form className="signup-form" name="firstName">
-          First name:<br></br>
-          <input type="text"></input>
-          <br></br>
-          Last name:<br></br>
-          <input type="text"></input>
-          <br></br>
-          Email:<br></br>
-          <input type="text"></input>
-        </form>
+        First name:<br></br>
+        <input type="text" ref="firstName"></input>
+        <br></br>
+        Last name:<br></br>
+        <input type="text" ref="lastName"></input>
+        <br></br>
+        Email:<br></br>
+        <input type="text" ref="email"></input>
+        <br></br>
         <SignUpButton text="Sign up now!"></SignUpButton>
-      </section>
+      </form>
     )
   }
 })
@@ -36,7 +50,7 @@ var SignUp = React.createClass({
 var SignUpButton = React.createClass({
   render: function() {
     return (
-      <button type="submit"><Link to={'/account'}>{this.props.text} </Link></button>
+      <button type="submit">{this.props.text}</button>
     );
   }
 });

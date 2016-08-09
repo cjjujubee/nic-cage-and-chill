@@ -4,6 +4,7 @@ var fetch = require('isomorphic-fetch');
 
 var SAVE_USER = 'SAVE_USER';
 var saveUser = function(user) {
+  console.log('this is my new user', user);
   return function(dispatch) {
     return fetch('http://localhost:8081/users', {
       method: 'POST',
@@ -23,10 +24,10 @@ var saveUser = function(user) {
         err.response = response;
         throw err;
       }
-      return response;
+      return response.json();
     })
-    .then(function() {
-      return dispatch(userSaved());
+    .then(function(user) {
+      return dispatch(userSaved(user));
     })
     .catch(function(err) {
       return dispatch(userNotSaved());
@@ -35,9 +36,10 @@ var saveUser = function(user) {
 };
 
 var USER_SAVED = 'USER_SAVED';
-var userSaved = function() {
+var userSaved = function(user) {
   return {
-    type: USER_SAVED
+    type: USER_SAVED,
+    user: user
   };
 };
 
@@ -48,13 +50,13 @@ var userNotSaved = function() {
   };
 };
 
-var STORE_USER = 'STORE_USER';
-var storeUser = function(user) {
-  return {
-    type: STORE_USER,
-    user: user
-  };
-};
+// var STORE_USER = 'STORE_USER';
+// var storeUser = function(user) {
+//   return {
+//     type: STORE_USER,
+//     user: user
+//   };
+// };
 
 //saving movies
 
@@ -62,7 +64,7 @@ var SAVE_MOVIE = 'SAVE_MOVIE';
 var saveMovie = function(movie, userId) {
   console.log('i am saving your movie right now');
   return function(dispatch) {
-    return fetch('http://localhost:8081/users/' + '5785cc5cbb55b5a537558492', {
+    return fetch('http://localhost:8081/users/' + userId, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -115,7 +117,7 @@ var GET_MOVIES = 'GET_MOVIES';
 var getMovies = function(userId) {
   console.log('getting your movies right now');
   return function(dispatch) {
-    return fetch('http://localhost:8081/users/' + '5785cc5cbb55b5a537558492', {
+    return fetch('http://localhost:8081/users/' + userId, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -163,8 +165,8 @@ exports.USER_SAVED = USER_SAVED;
 exports.userSaved = userSaved;
 exports.USER_NOT_SAVED = USER_NOT_SAVED;
 exports.userNotSaved = userNotSaved;
-exports.STORE_USER = STORE_USER;
-exports.storeUser = storeUser;
+// exports.STORE_USER = STORE_USER;
+// exports.storeUser = storeUser;
 
 //saving user movies actions
 exports.SAVE_MOVIE = SAVE_MOVIE;

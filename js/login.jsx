@@ -12,19 +12,19 @@ var Link = require('react-router').Link;
 var Provider = require('react-redux').Provider;
 var store = require('../redux/store');
 
-
 var Login = React.createClass({
     render: function() {
-        return (
-            <section className="login">
-                <h1>Login here</h1>
-                <form>
-                  Email address:<br></br><input type="text"></input>
-                  <br></br>
-                  <button type="submit"><Link to={'/account'}>Login!</Link></button>
-                </form>
-            </section>
-        )
+      return (
+        <section className="login">
+          <h1>Login here</h1>
+          <form>
+            Email address:<br></br><input type="text"></input>
+            <br></br>
+            <button type="submit"><Link to={'/account'}>Login!</Link></button>
+          </form>
+          <h3>Don't have an account?</h3>
+        </section>
+      )
     }
 });
 

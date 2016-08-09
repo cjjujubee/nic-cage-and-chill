@@ -10,11 +10,49 @@ var initialState = {
   user: null
 };
 
-//saving/retreiving movies
+//saving/storing users
+// exports.saveUserReducer = function(state, action) {
+//   state = state || initialState;
+//   console.log('initial state', state);
+//   if (action.type === actions.USER_SAVED) {
+//     console.log('==========USER_SAVED==========');
+//     var newState = update(state, {
+//       $set: {
+//         confirmed: true,
+//         user: action.user
+//       }
+//     });
+//     console.log('new state', newState);
+//     state = newState;
+//   }
+//   else if (action.type === actions.USER_NOT_SAVED) {
+//     console.log('==========USER_NOT_SAVED==========');
+//     var newState = update(state, {
+//       $set: {
+//         confirmed: false
+//       }
+//     });
+//     state = newState;
+//   }
+//   else if (action.type === actions.STORE_USER) {
+//     console.log('I am storing the user');
+//     var newState = update(state, {
+//       $set: {
+//         firstName: action.user.firstName,
+//         lastName: action.user.lastName,
+//         email: action.user.email
+//       }
+//     });
+//     state = newState;
+//   }
+//   return state;
+// };
+
+//saving/retrieving movies
 exports.userReducer = function(state, action) {
   state = state || initialState;
   if (action.type === actions.MOVIE_SAVED) {
-      console.log('==========MOVIE_SAVED==========');
+    console.log('==========MOVIE_SAVED==========');
     var newState = update(state, {
       $set: {
         confirmed: true
@@ -51,22 +89,19 @@ exports.userReducer = function(state, action) {
     });
     state = newState;
   }
-  return state;
-};
-
-//saving/storing users
-exports.saveUserReducer = function(state, action) {
-  state = state || initialState;
-  if (action.type === actions.USER_SAVED) {
+  else if (action.type === actions.USER_SAVED) {
+    console.log('==========USER_SAVED==========');
     var newState = update(state, {
       $set: {
-        confirmed: true
+        confirmed: true,
+        user: action.user
       }
     });
+    console.log('new state', newState);
     state = newState;
   }
   else if (action.type === actions.USER_NOT_SAVED) {
-    console.log('=====USER_NOT_SAVED=====');
+    console.log('==========USER_NOT_SAVED==========');
     var newState = update(state, {
       $set: {
         confirmed: false

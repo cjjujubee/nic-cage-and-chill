@@ -10,7 +10,6 @@ var hashHistory = router.hashHistory;
 var store = require('../redux/store.js');
 
 var movieActions = require('../redux/actions/movie');
-
 var userActions = require('../redux/actions/user');
 
 var MovieChecklist = React.createClass({
@@ -27,7 +26,7 @@ var MovieChecklist = React.createClass({
     console.log('nic cage user', this.props.nicCage);
     return (
       <section className="movie">
-        <h3>{this.props.nicCage.user.user.name}</h3>
+        <h3>{this.props.nicCage.user.user.firstName}</h3>
         <img src="../assets/images/cage_gravatar.jpeg" alt="User Gravatar"/>
         <form onSubmit={this.getMovie} className="movieTime">
           <h4>Ready for more Nic Cage?</h4>
