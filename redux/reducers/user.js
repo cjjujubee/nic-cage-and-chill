@@ -1,9 +1,6 @@
 var actions = require('../actions/user');
 var update = require('react-addons-update');
 
-
-//TODO: use watch_hstory to store movie objects
-// and populate the checklist?
 var initialState = {
   confirmed: false,
   show_title: null,
@@ -13,6 +10,7 @@ var initialState = {
   user: null
 };
 
+//saving/retreiving movies
 exports.userReducer = function(state, action) {
   state = state || initialState;
   if (action.type === actions.MOVIE_SAVED) {
@@ -49,6 +47,40 @@ exports.userReducer = function(state, action) {
     var newState = update(state, {
       $set: {
         user: action.movies
+      }
+    });
+    state = newState;
+  }
+  return state;
+};
+
+//saving/storing users
+exports.saveUserReducer = function(state, action) {
+  state = state || initialState;
+  if (action.type === actions.USER_SAVED) {
+    var newState = update(state, {
+      $set: {
+        confirmed: true
+      }
+    });
+    state = newState;
+  }
+  else if (action.type === actions.USER_NOT_SAVED) {
+    console.log('=====USER_NOT_SAVED=====');
+    var newState = update(state, {
+      $set: {
+        confirmed: false
+      }
+    });
+    state = newState;
+  }
+  else if (action.type === actions.STORE_USER) {
+    console.log('I am storing the user');
+    var newState = update(state, {
+      $set: {
+        firstName: action.user.firstName,
+        lastName: action.user.lastName,
+        email: action.user.email
       }
     });
     state = newState;
